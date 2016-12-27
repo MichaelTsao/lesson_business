@@ -23,9 +23,17 @@ use yii\db\ActiveRecord;
  * @property string $end_time
  * @property string $ctime
  * @property string $coverUrl
+ * @property \dakashuo\lesson\Teacher[] $teacher 授课老师
  */
 class Lesson extends \yii\db\ActiveRecord
 {
+    const STATUS_NORMAL = 1;
+    const STATUS_CLOSED = 2;
+
+    const PERIOD_YEAR = 1;
+    const PERIOD_QUARTER = 2;
+    const PERIOD_MONTH = 3;
+
     /**
      * @inheritdoc
      */
@@ -94,12 +102,47 @@ class Lesson extends \yii\db\ActiveRecord
         return $host . $this->cover;
     }
 
+    public function getTeacher()
+    {
+        return Teacher::findAll([
+            'teacher_id' => LessonTeacher::find()
+                ->select(['teacher_id'])
+                ->where(['lesson_id' => $this->lesson_id])
+                ->orderBy(['sort' => SORT_ASC])
+                ->column()
+        ]);
+    }
+
+    public function getLastUpdate()
+    {
+        return '';
+    }
+
+    public function getSubscribe()
+    {
+        if (isset(Yii::$app->user->identity)) {
+            if (LessonUser::find()
+                ->where([
+                    'lesson_id' => $this->lesson_id,
+                    'user_id' => Yii::$app->user->id,
+                    'status'=>LessonUser::STATUS_NORMAL
+                ])
+                ->one()
+            ) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public function fields()
     {
         return [
             'lesson_id',
             'name',
             'cover' => 'coverUrl',
+            'lastUpdate',
+            'subscribed',
         ];
     }
 }

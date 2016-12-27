@@ -2,7 +2,10 @@
 
 namespace dakashuo\lesson;
 
+use mycompany\common\Logic;
 use Yii;
+use yii\behaviors\AttributeBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * This is the model class for table "teacher".
@@ -32,7 +35,7 @@ class Teacher extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['teacher_id'], 'required'],
+            [['teacher_id', 'name'], 'required'],
             [['intro'], 'string'],
             [['status'], 'integer'],
             [['ctime'], 'safe'],
@@ -58,6 +61,19 @@ class Teacher extends \yii\db\ActiveRecord
             'intro' => '介绍',
             'status' => '状态',
             'ctime' => '创建时间',
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => AttributeBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => 'teacher_id',
+                ],
+                'value' => Logic::makeID(),
+            ],
         ];
     }
 }

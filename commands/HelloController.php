@@ -8,6 +8,7 @@
 namespace app\commands;
 
 use dakashuo\lesson\User;
+use mycompany\common\Logic;
 use yii\console\Controller;
 
 /**
@@ -24,14 +25,9 @@ class HelloController extends Controller
      * This command echoes what you have entered as the message.
      * @param string $message the message to be echoed.
      */
-    public function actionIndex($status)
+    public function actionIndex($time)
     {
-        if ($status == User::STATUS_NORMAL) {
-            $id = 1;
-            $user = User::findOne($id);
-            if ($user->teacher) {
-                echo $user->teacher->name;
-            }
-        }
+
+        echo Logic::friendlyDate(strtotime($time), 'mohu')."\n";
     }
 }

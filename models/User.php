@@ -2,6 +2,10 @@
 
 namespace dakashuo\lesson;
 
+use mycompany\common\Logic;
+use yii\behaviors\AttributeBehavior;
+use yii\db\ActiveRecord;
+
 /**
  * This is the model class for table "user".
  *
@@ -67,6 +71,19 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         }
 
         return null;
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => AttributeBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => 'user_id',
+                ],
+                'value' => Logic::makeID(),
+            ],
+        ];
     }
 
     /**
