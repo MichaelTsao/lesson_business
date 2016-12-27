@@ -2,38 +2,64 @@
 
 namespace dakashuo\lesson;
 
-class User extends \yii\base\Object implements \yii\web\IdentityInterface
+/**
+ * This is the model class for table "user".
+ *
+ * @property string $user_id
+ * @property string $name
+ * @property string $icon
+ * @property string $weixin_id
+ * @property integer $status
+ * @property string $ctime
+ */
+class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
-    public $id;
-    public $username;
-    public $password;
-    public $authKey;
-    public $accessToken;
-
-    private static $users = [
-        '100' => [
-            'id' => '100',
-            'username' => 'admin',
-            'password' => 'admin',
-            'authKey' => 'test100key',
-            'accessToken' => '100-token',
-        ],
-        '101' => [
-            'id' => '101',
-            'username' => 'demo',
-            'password' => 'demo',
-            'authKey' => 'test101key',
-            'accessToken' => '101-token',
-        ],
+    const STATUS_NORMAL = 1;
+    const STATUS_CLOSED = 2;
+    public $statuses = [
+        self::STATUS_NORMAL => '正常',
+        self::STATUS_CLOSED => '关闭',
     ];
 
+    public static function tableName()
+    {
+        return 'user';
+    }
+
+    public function rules()
+    {
+        return [
+            [['user_id'], 'required'],
+            [['status'], 'integer'],
+            [['ctime'], 'safe'],
+            [['user_id'], 'string', 'max' => 12],
+            [['name', 'icon'], 'string', 'max' => 500],
+            [['weixin_id'], 'string', 'max' => 100],
+        ];
+    }
+
+    public function attributeLabels()
+    {
+        return [
+            'user_id' => '用户ID',
+            'name' => '名字',
+            'icon' => '头像',
+            'weixin_id' => '微信open_id',
+            'status' => '用户状态',
+            'ctime' => '创建时间',
+        ];
+    }
 
     /**
      * @inheritdoc
      */
     public static function findIdentity($id)
     {
-        return isset(self::$users[$id]) ? new static(self::$users[$id]) : null;
+        if ($user = static::findOne($id)) {
+            return $user;
+        }
+
+        return null;
     }
 
     /**
@@ -41,10 +67,9 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        foreach (self::$users as $user) {
-            if ($user['accessToken'] === $token) {
-                return new static($user);
-            }
+        if ('token' === $token) {
+            $id = 1;
+            return User::findOne($id);
         }
 
         return null;
@@ -58,10 +83,8 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public static function findByUsername($username)
     {
-        foreach (self::$users as $user) {
-            if (strcasecmp($user['username'], $username) === 0) {
-                return new static($user);
-            }
+        if ($user = static::findOne(['name' => $username])) {
+            return $user;
         }
 
         return null;
@@ -72,7 +95,7 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public function getId()
     {
-        return $this->id;
+        return $this->user_id;
     }
 
     /**
@@ -80,7 +103,7 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public function getAuthKey()
     {
-        return $this->authKey;
+        return null;
     }
 
     /**
@@ -88,7 +111,7 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-        return $this->authKey === $authKey;
+        return false;
     }
 
     /**
@@ -99,6 +122,7 @@ class User extends \yii\base\Object implements \yii\web\IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+//        return $this->password === $password;
+        return false;
     }
 }

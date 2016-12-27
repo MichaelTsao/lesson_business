@@ -12,13 +12,20 @@
   "license": "BSD-3-Clause",
   "support": {
     "email": "caoxiang@dakashuo.com",
-    "source": "git@git.hangjiashuo.com.cn:dakashuo/lesson_business.git"
+    "source": "http://git.hangjiashuo.com.cn/lesson_business"
   },
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://pkg.hangjiashuo.com.cn"
+    }
+  ],
   "minimum-stability": "stable",
   "require": {
     "php": ">=5.4.0",
     "yiisoft/yii2": "~2.0.5",
-    "yiisoft/yii2-bootstrap": "~2.0.0"
+    "yiisoft/yii2-bootstrap": "~2.0.0",
+    "mycompany/common": "dev-master"
   },
   "require-dev": {
     "yiisoft/yii2-debug": "~2.0.0",
@@ -29,7 +36,8 @@
     "codeception/specify": "~0.4.3"
   },
   "config": {
-    "process-timeout": 1800
+    "process-timeout": 1800,
+    "secure-http": false
   },
   "autoload": {
     "psr-4": {

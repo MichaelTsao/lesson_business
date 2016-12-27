@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "c7937831cbd10e9bba4e9af08128900a",
-    "content-hash": "5438861ad666f7367e7d9ae0e539b7d0",
+    "hash": "9c31bde81429d2ce6ea64bb5f176cfe7",
+    "content-hash": "3aa690d940d2099356532f7e3e2c597e",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -294,35 +294,36 @@
             "time": "2016-07-16 12:58:58"
         },
         {
-            "name": "swiftmailer/swiftmailer",
-            "version": "v5.4.4",
+            "name": "hashids/hashids",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/swiftmailer/swiftmailer.git",
-                "reference": "545ce9136690cea74f98f86fbb9c92dd9ab1a756"
+                "url": "https://github.com/ivanakimov/hashids.php.git",
+                "reference": "57cf3bbfbb939868a37a201aa858071e6c1b4764"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/swiftmailer/swiftmailer/545ce9136690cea74f98f86fbb9c92dd9ab1a756.zip",
-                "reference": "545ce9136690cea74f98f86fbb9c92dd9ab1a756",
+                "url": "https://packagist.phpcomposer.com/files/ivanakimov/hashids.php/57cf3bbfbb939868a37a201aa858071e6c1b4764.zip",
+                "reference": "57cf3bbfbb939868a37a201aa858071e6c1b4764",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.3.3"
+                "ext-bcmath": "*",
+                "php": "^5.6.4 || ^7.0"
             },
             "require-dev": {
-                "mockery/mockery": "~0.9.1"
+                "phpunit/phpunit": "^5.6"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.4-dev"
+                    "dev-master": "2.0-dev"
                 }
             },
             "autoload": {
-                "files": [
-                    "lib/swift_required.php"
-                ]
+                "psr-4": {
+                    "Hashids\\": "src/"
+                }
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -330,21 +331,73 @@
             ],
             "authors": [
                 {
-                    "name": "Chris Corbyn"
+                    "name": "Ivan Akimov",
+                    "email": "ivan@barreleye.com",
+                    "homepage": "https://twitter.com/IvanAkimov"
                 },
                 {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
+                    "name": "Vincent Klaiber",
+                    "email": "hello@vinkla.com",
+                    "homepage": "https://vinkla.com"
                 }
             ],
-            "description": "Swiftmailer, free feature-rich PHP mailer",
-            "homepage": "http://swiftmailer.org",
+            "description": "Generate short, unique, non-sequential ids (like YouTube and Bitly) from numbers",
+            "homepage": "http://hashids.org/php",
             "keywords": [
-                "email",
-                "mail",
-                "mailer"
+                "bitly",
+                "decode",
+                "encode",
+                "hash",
+                "hashid",
+                "hashids",
+                "ids",
+                "obfuscate",
+                "youtube"
             ],
-            "time": "2016-11-24 01:01:23"
+            "time": "2016-11-15 18:59:27"
+        },
+        {
+            "name": "mycompany/common",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "git@git.hangjiashuo.com.cn:dakashuo/lib-common.git",
+                "reference": "aeee2f227e1e4f792e35acd08e2e797999df6a91"
+            },
+            "require": {
+                "hashids/hashids": "~2.0.0",
+                "php": ">=5.4.0",
+                "yiisoft/yii2": "*",
+                "yiisoft/yii2-redis": "^2.0"
+            },
+            "type": "common library",
+            "autoload": {
+                "psr-4": {
+                    "mycompany\\common\\": ""
+                }
+            },
+            "license": [
+                "common-1"
+            ],
+            "authors": [
+                {
+                    "name": "Jinlin Wang",
+                    "email": "285253001@qq.com",
+                    "homepage": "http://xxx.xxx.com",
+                    "role": "Creator"
+                }
+            ],
+            "description": "common",
+            "homepage": "http://git.hangjiashuo.com.cn:8686/dakashuo/lib-common.git",
+            "keywords": [
+                "common",
+                "yii2"
+            ],
+            "support": {
+                "issues": "https://xxx.xxx.com",
+                "source": "https://xxx.xxx.com"
+            },
+            "time": "2016-12-09 04:06:09"
         },
         {
             "name": "yiisoft/yii2",
@@ -541,22 +594,21 @@
             "time": "2016-12-20 13:26:02"
         },
         {
-            "name": "yiisoft/yii2-swiftmailer",
-            "version": "2.0.6",
+            "name": "yiisoft/yii2-redis",
+            "version": "2.0.5",
             "source": {
                 "type": "git",
-                "url": "https://github.com/yiisoft/yii2-swiftmailer.git",
-                "reference": "26b900767f1031ff3a4668dfa36c10595875f0a5"
+                "url": "https://github.com/yiisoft/yii2-redis.git",
+                "reference": "7fd93ff3847e765964c8c83b7e3eed0281078916"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/yiisoft/yii2-swiftmailer/26b900767f1031ff3a4668dfa36c10595875f0a5.zip",
-                "reference": "26b900767f1031ff3a4668dfa36c10595875f0a5",
+                "url": "https://packagist.phpcomposer.com/files/yiisoft/yii2-redis/7fd93ff3847e765964c8c83b7e3eed0281078916.zip",
+                "reference": "7fd93ff3847e765964c8c83b7e3eed0281078916",
                 "shasum": ""
             },
             "require": {
-                "swiftmailer/swiftmailer": "~5.0",
-                "yiisoft/yii2": "~2.0.4"
+                "yiisoft/yii2": ">=2.0.4"
             },
             "type": "yii2-extension",
             "extra": {
@@ -566,7 +618,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "yii\\swiftmailer\\": ""
+                    "yii\\redis\\": ""
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -575,20 +627,19 @@
             ],
             "authors": [
                 {
-                    "name": "Paul Klimov",
-                    "email": "klimov.paul@gmail.com"
+                    "name": "Carsten Brandt",
+                    "email": "mail@cebe.cc"
                 }
             ],
-            "description": "The SwiftMailer integration for the Yii framework",
+            "description": "Redis Cache, Session and ActiveRecord for the Yii framework",
             "keywords": [
-                "email",
-                "mail",
-                "mailer",
-                "swift",
-                "swiftmailer",
+                "active-record",
+                "cache",
+                "redis",
+                "session",
                 "yii2"
             ],
-            "time": "2016-09-09 11:48:11"
+            "time": "2016-03-17 04:11:03"
         }
     ],
     "packages-dev": [
@@ -1292,16 +1343,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "4.0.3",
+            "version": "4.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "903fd6318d0a90b4770a009ff73e4a4e9c437929"
+                "reference": "c14196e64a78570034afd0b7a9f3757ba71c2a0a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/sebastianbergmann/php-code-coverage/903fd6318d0a90b4770a009ff73e4a4e9c437929.zip",
-                "reference": "903fd6318d0a90b4770a009ff73e4a4e9c437929",
+                "url": "https://packagist.phpcomposer.com/files/sebastianbergmann/php-code-coverage/c14196e64a78570034afd0b7a9f3757ba71c2a0a.zip",
+                "reference": "c14196e64a78570034afd0b7a9f3757ba71c2a0a",
                 "shasum": ""
             },
             "require": {
@@ -1351,7 +1402,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-11-28 16:00:31"
+            "time": "2016-12-20 15:22:42"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -2994,7 +3045,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "mycompany/common": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
