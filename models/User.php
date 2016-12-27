@@ -16,6 +16,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     const STATUS_NORMAL = 1;
     const STATUS_CLOSED = 2;
+
     public $statuses = [
         self::STATUS_NORMAL => '正常',
         self::STATUS_CLOSED => '关闭',
