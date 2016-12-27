@@ -22,7 +22,7 @@ use yii\db\ActiveRecord;
  * @property string $start_time
  * @property string $end_time
  * @property string $ctime
- * @property string $imageHost
+ * @property string $coverUrl
  */
 class Lesson extends \yii\db\ActiveRecord
 {
@@ -85,12 +85,13 @@ class Lesson extends \yii\db\ActiveRecord
         ];
     }
 
-    public function getImageHost()
+    public function getCoverUrl()
     {
+        $host = '';
         if (isset(Yii::$app->params['imageHost'])) {
-            return Yii::$app->params['imageHost'];
+            $host = Yii::$app->params['imageHost'];
         }
-        return '';
+        return $host . $this->cover;
     }
 
     public function fields()
@@ -98,7 +99,7 @@ class Lesson extends \yii\db\ActiveRecord
         return [
             'lesson_id',
             'name',
-            'cover' => $this->imageHost . $this->cover,
+            'cover' => 'coverUrl',
         ];
     }
 }
