@@ -1,10 +1,11 @@
 {
   "name": "dakashuo/lesson",
-  "description": "New Lesson Business Models",
+  "description": "新课业务类库",
   "keywords": [
     "dakashuo",
     "lesson",
-    "new lesson"
+    "new lesson",
+    "yii2"
   ],
   "homepage": "http://www.dakashuo.com/",
   "type": "library",
