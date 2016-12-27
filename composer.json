@@ -8,7 +8,7 @@
     "yii2"
   ],
   "homepage": "http://www.dakashuo.com/",
-  "type": "dakashuo library",
+  "type": "dakashuo-library",
   "license": "BSD-3-Clause",
   "support": {
     "email": "caoxiang@dakashuo.com",
