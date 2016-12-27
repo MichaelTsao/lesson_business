@@ -10,23 +10,29 @@ namespace dakashuo\lesson;
  * @property string $icon
  * @property string $weixin_id
  * @property integer $status
- * @property string $ctime
+ * @property string $ctime 创建时间
+ * @property \dakashuo\lesson\Teacher $teacher 老师的实例
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
     const STATUS_NORMAL = 1;
     const STATUS_CLOSED = 2;
 
-    public $statuses = [
+    public static $statuses = [
         self::STATUS_NORMAL => '正常',
         self::STATUS_CLOSED => '关闭',
     ];
+
+    private $_teacher = null;
 
     public static function tableName()
     {
         return 'user';
     }
 
+    /**
+     * @return array
+     */
     public function rules()
     {
         return [
@@ -39,6 +45,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         ];
     }
 
+    /**
+     * @return array
+     */
     public function attributeLabels()
     {
         return [
@@ -49,6 +58,17 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'status' => '用户状态',
             'ctime' => '创建时间',
         ];
+    }
+
+    /**
+     * @return false|\dakashuo\lesson\Teacher
+     */
+    public function getTeacher()
+    {
+        if ($this->_teacher === null) {
+            $this->_teacher = Teacher::findOne($this->user_id);
+        }
+        return $this->_teacher;
     }
 
     /**

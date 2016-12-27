@@ -7,6 +7,7 @@
 
 namespace app\commands;
 
+use dakashuo\lesson\User;
 use yii\console\Controller;
 
 /**
@@ -23,8 +24,14 @@ class HelloController extends Controller
      * This command echoes what you have entered as the message.
      * @param string $message the message to be echoed.
      */
-    public function actionIndex($message = 'hello world')
+    public function actionIndex($status)
     {
-        echo $message . "\n";
+        if ($status == User::STATUS_NORMAL) {
+            $id = 1;
+            $user = User::findOne($id);
+            if ($user->teacher) {
+                echo $user->teacher->name;
+            }
+        }
     }
 }
