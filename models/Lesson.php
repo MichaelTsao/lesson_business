@@ -30,9 +30,20 @@ class Lesson extends \yii\db\ActiveRecord
     const STATUS_NORMAL = 1;
     const STATUS_CLOSED = 2;
 
+    public static $statuses = [
+        self::STATUS_NORMAL => '正常',
+        self::STATUS_CLOSED => '关闭',
+    ];
+
     const PERIOD_YEAR = 1;
     const PERIOD_QUARTER = 2;
     const PERIOD_MONTH = 3;
+
+    public static $periods = [
+        self::PERIOD_MONTH => '月',
+        self::PERIOD_QUARTER => '季',
+        self::PERIOD_YEAR => '年',
+    ];
 
     /**
      * @inheritdoc
@@ -48,7 +59,6 @@ class Lesson extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['lesson_id'], 'required'],
             [['price'], 'number'],
             [['details'], 'string'],
             [['period', 'status'], 'integer'],
@@ -104,13 +114,7 @@ class Lesson extends \yii\db\ActiveRecord
 
     public function getTeacher()
     {
-        return Teacher::findAll([
-            'teacher_id' => LessonTeacher::find()
-                ->select(['teacher_id'])
-                ->where(['lesson_id' => $this->lesson_id])
-                ->orderBy(['sort' => SORT_ASC])
-                ->column()
-        ]);
+        return Teacher::getByLesson($this->lesson_id);
     }
 
     public function getLastUpdate()
@@ -125,7 +129,7 @@ class Lesson extends \yii\db\ActiveRecord
                 ->where([
                     'lesson_id' => $this->lesson_id,
                     'user_id' => Yii::$app->user->id,
-                    'status'=>LessonUser::STATUS_NORMAL
+                    'status' => LessonUser::STATUS_NORMAL
                 ])
                 ->one()
             ) {

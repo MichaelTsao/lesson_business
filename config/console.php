@@ -8,6 +8,9 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'app\commands',
+    'aliases' => [
+        '@dakashuo/lesson' => '@app/models',
+    ],
     'components' => [
         'cache' => [
             'class' => 'yii\caching\FileCache',

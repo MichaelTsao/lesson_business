@@ -15,6 +15,7 @@ use yii\db\ActiveRecord;
  * @property string $weixin_id
  * @property integer $status
  * @property string $ctime 创建时间
+ * @property \dakashuo\lesson\Lesson[] $lesson 订阅课程
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
@@ -85,6 +86,18 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ],
         ];
     }
+
+    public function getLesson()
+    {
+        return $this->hasMany(Lesson::className(), ['lesson_id' => 'lesson_id'])
+            ->viaTable('lesson_user', ['user_id' => 'user_id'], function($query){
+                $query->andWhere(['status' => LessonUser::STATUS_NORMAL]);
+            });
+    }
+
+    /*
+     * functions below is import from Interface IdentityInterface
+     */
 
     /**
      * @inheritdoc
