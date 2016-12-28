@@ -79,11 +79,6 @@ class Teacher extends \yii\db\ActiveRecord
 
     public function getLesson()
     {
-        return $this->hasMany(LessonTeacher::className(), ['teacher_id' => 'teacher_id']);
-    }
-
-    public static function getByLesson($lessonId)
-    {
-        return static::find()->joinWith('lesson l')->where(['l.lesson_id' => $lessonId])->orderBy('l.sort')->all();
+        return $this->hasMany(LessonTeacher::className(), ['teacher_id' => 'teacher_id'])->orderBy('sort');
     }
 }

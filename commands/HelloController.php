@@ -28,8 +28,8 @@ class HelloController extends Controller
      */
     public function actionIndex()
     {
-        $lesson = User::findOne('asdjfals2763');
-        foreach($lesson->lesson as $teacher){
+        $lesson = Lesson::findOne('5ojj0wzrw4z');
+        foreach($lesson->teacher as $teacher){
             echo $teacher->name."\n";
         }
     }

@@ -114,7 +114,7 @@ class Lesson extends \yii\db\ActiveRecord
 
     public function getTeacher()
     {
-        return Teacher::getByLesson($this->lesson_id);
+        return Teacher::find()->joinWith('lesson l')->where(['l.lesson_id' => $this->lesson_id])->all();
     }
 
     public function getLastUpdate()
@@ -124,7 +124,7 @@ class Lesson extends \yii\db\ActiveRecord
 
     public function getSubscribe()
     {
-        if (isset(Yii::$app->user->identity)) {
+        if (!Yii::$app->user->isGuest) {
             if (LessonUser::find()
                 ->where([
                     'lesson_id' => $this->lesson_id,
@@ -146,7 +146,7 @@ class Lesson extends \yii\db\ActiveRecord
             'name',
             'cover' => 'coverUrl',
             'lastUpdate',
-            'subscribed',
+            'subscribe',
         ];
     }
 }
