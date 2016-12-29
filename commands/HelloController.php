@@ -9,7 +9,9 @@ namespace app\commands;
 
 use dakashuo\lesson\Lesson;
 use dakashuo\lesson\User;
+use mycompany\common\Logic;
 use yii\console\Controller;
+use yii\debug\models\search\Log;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -28,6 +30,8 @@ class HelloController extends Controller
      */
     public function actionIndex()
     {
+        echo Logic::makeID()."\n";
+
         $lesson = Lesson::findOne('5ojj0wzrw4z');
         foreach($lesson->teacher as $teacher){
             echo $teacher->name."\n";

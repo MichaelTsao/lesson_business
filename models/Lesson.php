@@ -12,9 +12,12 @@ use yii\db\ActiveRecord;
  *
  * @property string $lesson_id
  * @property string $name
+ * @property string $slogan
  * @property string $price
  * @property integer $period
+ * @property integer $virtual_sub
  * @property string $intro
+ * @property string $suitable
  * @property string $details
  * @property string $cover
  * @property string $poster
@@ -23,16 +26,24 @@ use yii\db\ActiveRecord;
  * @property string $end_time
  * @property string $ctime
  * @property string $coverUrl
+ * @property string $posterUrl
  * @property \dakashuo\lesson\Teacher[] $teacher 授课老师
+ * @property string $lastUpdateTime 最新章节更新时间
+ * @property bool $isSubscribed
+ * @property integer $subscribeCount
+ * @property string $imageHost
+ * @property bool $hasFree
  */
 class Lesson extends \yii\db\ActiveRecord
 {
     const STATUS_NORMAL = 1;
-    const STATUS_CLOSED = 2;
+    const STATUS_NOT_OPEN = 2;
+    const STATUS_CLOSED = 3;
 
     public static $statuses = [
         self::STATUS_NORMAL => '正常',
-        self::STATUS_CLOSED => '关闭',
+        self::STATUS_NOT_OPEN => '未开始',
+        self::STATUS_CLOSED => '已下线',
     ];
 
     const PERIOD_YEAR = 1;
@@ -60,11 +71,11 @@ class Lesson extends \yii\db\ActiveRecord
     {
         return [
             [['price'], 'number'],
-            [['details'], 'string'],
-            [['period', 'status'], 'integer'],
+            [['intro', 'suitable', 'details'], 'string'],
+            [['period', 'virtual_sub', 'status'], 'integer'],
             [['start_time', 'end_time', 'ctime'], 'safe'],
             [['lesson_id'], 'string', 'max' => 12],
-            [['name', 'intro', 'cover', 'poster'], 'string', 'max' => 1000],
+            [['name', 'slogan', 'cover', 'poster'], 'string', 'max' => 1000],
             [['name'], 'required'],
         ];
     }
@@ -77,10 +88,13 @@ class Lesson extends \yii\db\ActiveRecord
         return [
             'lesson_id' => '课程ID',
             'name' => '名字',
+            'slogan' => '标语',
             'price' => '价格',
             'period' => '价格周期',
+            'virtual_sub' => '虚拟订阅',
             'intro' => '简介',
-            'details' => '详情',
+            'suitable' => '适宜人群',
+            'details' => '订阅须知',
             'cover' => '封面',
             'poster' => '海报',
             'status' => '状态',
@@ -105,11 +119,21 @@ class Lesson extends \yii\db\ActiveRecord
 
     public function getCoverUrl()
     {
-        $host = '';
+        return $this->imageHost . $this->cover;
+    }
+
+    public function getPosterUrl()
+    {
+        return $this->imageHost . $this->poster;
+    }
+
+    public function getImageHost()
+    {
         if (isset(Yii::$app->params['imageHost'])) {
-            $host = Yii::$app->params['imageHost'];
+            return Yii::$app->params['imageHost'];
+        } else {
+            return '';
         }
-        return $host . $this->cover;
     }
 
     public function getTeacher()
@@ -117,12 +141,22 @@ class Lesson extends \yii\db\ActiveRecord
         return Teacher::find()->joinWith('lesson l')->where(['l.lesson_id' => $this->lesson_id])->all();
     }
 
-    public function getLastUpdate()
+    public function getLastUpdateTime()
     {
         return '';
     }
 
-    public function getSubscribe()
+    public function getLastUpdate()
+    {
+        return [];
+    }
+
+    public function getHasFree()
+    {
+        return false;
+    }
+
+    public function getIsSubscribed()
     {
         if (!Yii::$app->user->isGuest) {
             if (LessonUser::find()
@@ -139,14 +173,32 @@ class Lesson extends \yii\db\ActiveRecord
         return false;
     }
 
+    public function getSubscribeCount()
+    {
+        return 0 + $this->virtual_sub;
+    }
+
     public function fields()
     {
         return [
             'lesson_id',
             'name',
             'cover' => 'coverUrl',
+            'poster' => 'posterUrl',
             'lastUpdate',
-            'subscribe',
+            'isSubscribed',
+            'price',
+            'period',
+            'teacher',
+            'slogan',
+            'intro',
+            'suitable',
+            'details',
+            'subscribeCount',
+            'lastUpdateTime',
+            'hasFree',
+            'startTime' => 'start_time',
+            'endTime' => 'end_time',
         ];
     }
 }
