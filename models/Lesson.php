@@ -31,7 +31,6 @@ use yii\db\ActiveRecord;
  * @property string $lastUpdateTime 最新章节更新时间
  * @property bool $isSubscribed
  * @property integer $subscribeCount
- * @property string $imageHost
  * @property bool $hasFree
  */
 class Lesson extends \yii\db\ActiveRecord
@@ -119,21 +118,12 @@ class Lesson extends \yii\db\ActiveRecord
 
     public function getCoverUrl()
     {
-        return $this->imageHost . $this->cover;
+        return Logic::getImageHost() . $this->cover;
     }
 
     public function getPosterUrl()
     {
-        return $this->imageHost . $this->poster;
-    }
-
-    public function getImageHost()
-    {
-        if (isset(Yii::$app->params['imageHost'])) {
-            return Yii::$app->params['imageHost'];
-        } else {
-            return '';
-        }
+        return Logic::getImageHost() . $this->poster;
     }
 
     public function getTeacher()

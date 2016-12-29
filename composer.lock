@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9c31bde81429d2ce6ea64bb5f176cfe7",
+    "hash": "0c817adff99d7e9aff4f6d8604a6f681",
     "content-hash": "3aa690d940d2099356532f7e3e2c597e",
     "packages": [
         {
@@ -362,7 +362,7 @@
             "source": {
                 "type": "git",
                 "url": "git@git.hangjiashuo.com.cn:dakashuo/lib-common.git",
-                "reference": "aeee2f227e1e4f792e35acd08e2e797999df6a91"
+                "reference": "207d88284041abb81d5675b0a11a5e811157f58b"
             },
             "require": {
                 "hashids/hashids": "~2.0.0",
@@ -397,7 +397,7 @@
                 "issues": "https://xxx.xxx.com",
                 "source": "https://xxx.xxx.com"
             },
-            "time": "2016-12-09 04:06:09"
+            "time": "2016-12-29 11:13:30"
         },
         {
             "name": "yiisoft/yii2",
@@ -1587,16 +1587,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "5.7.4",
+            "version": "5.7.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "af91da3f2671006ff5d0628023de3b7ac4d1ef09"
+                "reference": "50fd2be8f3e23e91da825f36f08e5f9633076ffe"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/sebastianbergmann/phpunit/af91da3f2671006ff5d0628023de3b7ac4d1ef09.zip",
-                "reference": "af91da3f2671006ff5d0628023de3b7ac4d1ef09",
+                "url": "https://packagist.phpcomposer.com/files/sebastianbergmann/phpunit/50fd2be8f3e23e91da825f36f08e5f9633076ffe.zip",
+                "reference": "50fd2be8f3e23e91da825f36f08e5f9633076ffe",
                 "shasum": ""
             },
             "require": {
@@ -1665,7 +1665,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2016-12-13 16:19:44"
+            "time": "2016-12-28 07:18:51"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
