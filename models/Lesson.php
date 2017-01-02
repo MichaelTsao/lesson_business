@@ -179,7 +179,9 @@ class Lesson extends \yii\db\ActiveRecord
             'lastUpdate',
             'isSubscribed',
             'price',
-            'period',
+            'period' => function ($model) {
+                return static::$periods[$model->period];
+            },
             'teacher',
             'slogan',
             'intro',

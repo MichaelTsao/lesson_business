@@ -93,7 +93,7 @@ class Teacher extends \yii\db\ActiveRecord
         return [
             'teacher_id',
             'name',
-            'icon'=>'iconUrl',
+            'icon' => 'iconUrl',
             'title',
         ];
     }
