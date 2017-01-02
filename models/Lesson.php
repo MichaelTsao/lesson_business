@@ -108,11 +108,6 @@ class Lesson extends \yii\db\ActiveRecord
     {
         return [
             [
-                'class' => AttributeTypecastBehavior::className(),
-                'typecastAfterFind' => true,
-                'owner' => $this,
-            ],
-            [
                 'class' => AttributeBehavior::className(),
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => 'lesson_id',
@@ -154,7 +149,7 @@ class Lesson extends \yii\db\ActiveRecord
 
     public function getIsSubscribed()
     {
-        if (!Yii::$app->user->isGuest) {
+        if (isset(Yii::$app->user) && !Yii::$app->user->isGuest) {
             if (LessonUser::find()
                 ->where([
                     'lesson_id' => $this->lesson_id,

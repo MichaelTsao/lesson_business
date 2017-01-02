@@ -30,9 +30,7 @@ class HelloController extends Controller
      */
     public function actionIndex()
     {
-        $lesson = Lesson::findOne('5ojj0wzrw4z');
-        foreach($lesson->teacher as $teacher){
-            echo $teacher->name."\n";
-        }
+        $lesson = Lesson::findOne('082p7wk4m05');
+        echo json_encode($lesson->toArray())."\n";
     }
 }
