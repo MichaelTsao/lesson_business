@@ -22,7 +22,7 @@
                 "shasum": ""
             },
             "require": {
-                "bower-asset/jquery": ">=1.9.1,<4.0"
+                "bower-asset/jquery": ">=1.9.1,<=3"
             },
             "type": "bower-asset-library",
             "extra": {
@@ -295,16 +295,16 @@
         },
         {
             "name": "hashids/hashids",
-            "version": "2.0.0",
+            "version": "2.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ivanakimov/hashids.php.git",
-                "reference": "57cf3bbfbb939868a37a201aa858071e6c1b4764"
+                "reference": "28889ed83cdc91f4a55637daff0fb5c799eb324e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packagist.phpcomposer.com/files/ivanakimov/hashids.php/57cf3bbfbb939868a37a201aa858071e6c1b4764.zip",
-                "reference": "57cf3bbfbb939868a37a201aa858071e6c1b4764",
+                "url": "https://packagist.phpcomposer.com/files/ivanakimov/hashids.php/28889ed83cdc91f4a55637daff0fb5c799eb324e.zip",
+                "reference": "28889ed83cdc91f4a55637daff0fb5c799eb324e",
                 "shasum": ""
             },
             "require": {
@@ -317,7 +317,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.0-dev"
+                    "dev-master": "2.1-dev"
                 }
             },
             "autoload": {
@@ -354,7 +354,7 @@
                 "obfuscate",
                 "youtube"
             ],
-            "time": "2016-11-15 18:59:27"
+            "time": "2017-01-01 13:33:33"
         },
         {
             "name": "mycompany/common",
