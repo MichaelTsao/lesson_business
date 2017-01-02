@@ -14,6 +14,7 @@ use yii\db\ActiveRecord;
  * @property string $name
  * @property string $phone
  * @property string $icon
+ * @property string $iconUrl
  * @property string $title
  * @property string $intro
  * @property integer $status
@@ -80,5 +81,20 @@ class Teacher extends \yii\db\ActiveRecord
     public function getLesson()
     {
         return $this->hasMany(LessonTeacher::className(), ['teacher_id' => 'teacher_id'])->orderBy('sort');
+    }
+
+    public function getIconUrl()
+    {
+        return Logic::getImageHost() . $this->icon;
+    }
+
+    public function fields()
+    {
+        return [
+            'teacher_id',
+            'name',
+            'icon'=>'iconUrl',
+            'title',
+        ];
     }
 }
