@@ -180,7 +180,7 @@ class Lesson extends \yii\db\ActiveRecord
             'isSubscribed',
             'price',
             'period' => function ($model) {
-                return static::$periods[$model->period];
+                return isset(static::$periods[$model->period]) ? static::$periods[$model->period] : '';
             },
             'teacher',
             'slogan',
