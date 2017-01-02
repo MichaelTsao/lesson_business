@@ -108,15 +108,16 @@ class Lesson extends \yii\db\ActiveRecord
     {
         return [
             [
+                'class' => AttributeTypecastBehavior::className(),
+                'typecastAfterFind' => true,
+                'owner' => $this,
+            ],
+            [
                 'class' => AttributeBehavior::className(),
                 'attributes' => [
                     ActiveRecord::EVENT_BEFORE_INSERT => 'lesson_id',
                 ],
                 'value' => Logic::makeID(),
-            ],
-            'typecast' => [
-                'class' => AttributeTypecastBehavior::className(),
-                'typecastAfterFind' => true,
             ],
         ];
     }

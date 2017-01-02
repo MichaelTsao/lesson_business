@@ -30,8 +30,6 @@ class HelloController extends Controller
      */
     public function actionIndex()
     {
-        echo Logic::makeID()."\n";
-
         $lesson = Lesson::findOne('5ojj0wzrw4z');
         foreach($lesson->teacher as $teacher){
             echo $teacher->name."\n";
