@@ -6,6 +6,7 @@ use mycompany\common\Logic;
 use Yii;
 use yii\behaviors\AttributeBehavior;
 use yii\db\ActiveRecord;
+use yii\behaviors\AttributeTypecastBehavior;
 
 /**
  * This is the model class for table "lesson".
@@ -112,6 +113,10 @@ class Lesson extends \yii\db\ActiveRecord
                     ActiveRecord::EVENT_BEFORE_INSERT => 'lesson_id',
                 ],
                 'value' => Logic::makeID(),
+            ],
+            'typecast' => [
+                'class' => AttributeTypecastBehavior::className(),
+                'typecastAfterFind' => true,
             ],
         ];
     }
