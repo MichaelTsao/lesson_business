@@ -19,9 +19,9 @@ use Yii;
  */
 class LessonUser extends \yii\db\ActiveRecord
 {
-    const STATUS_NORMAL = 1;
-    const STATUS_CLOSED = 2;
-    const STATUS_FINISH = 3;
+    const STATUS_NORMAL = 1;    // 正常
+    const STATUS_CLOSED = 2;    // 关闭
+    const STATUS_FINISH = 3;    // 过期
 
     /**
      * @inheritdoc

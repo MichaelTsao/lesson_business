@@ -126,9 +126,10 @@ class Chapter extends \yii\db\ActiveRecord
     {
         if ($this->_content === null) {
             $this->_content = [];
-            $contentId = json_decode($this->contents, true);
-            foreach ($contentId as $id) {
-                $this->_content[] = Content::findOne($id);
+            if ($contentId = json_decode($this->contents, true)) {
+                foreach ($contentId as $id) {
+                    $this->_content[] = Content::findOne($id);
+                }
             }
         }
         return $this->_content;
