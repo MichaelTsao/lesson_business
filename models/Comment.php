@@ -18,6 +18,7 @@ use mycompany\common\Logic;
  * @property integer $status
  * @property integer $is_shield
  * @property User $user
+ * @property Chapter $chapter
  * @property integer $like
  */
 class Comment extends \yii\db\ActiveRecord
@@ -93,6 +94,11 @@ class Comment extends \yii\db\ActiveRecord
     public function getUser()
     {
         return $this->hasOne(User::className(), ['user_id' => 'user_id']);
+    }
+
+    public function getChapter()
+    {
+        return $this->hasOne(Chapter::className(), ['chapter_id' => 'chapter_id']);
     }
 
     public function getLike()
