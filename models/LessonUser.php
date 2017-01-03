@@ -62,4 +62,20 @@ class LessonUser extends \yii\db\ActiveRecord
             'ctime' => '创建时间',
         ];
     }
+
+    public static function check($lesson_id, $uid = null)
+    {
+        if (!$uid) {
+            if (Yii::$app->user->isGuest) {
+                return false;
+            } else {
+                $uid = Yii::$app->user->id;
+            }
+        }
+
+        if (static::findOne(['lesson_id' => $lesson_id, 'user_id' => $uid, 'status' => static::STATUS_NORMAL])) {
+            return true;
+        }
+        return false;
+    }
 }
