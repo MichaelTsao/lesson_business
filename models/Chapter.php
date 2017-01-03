@@ -67,7 +67,7 @@ class Chapter extends \yii\db\ActiveRecord
             [['name'], 'required'],
             [['listen', 'virtual_listen', 'is_free', 'status'], 'integer'],
             [['ctime'], 'safe'],
-            [['chpater_id', 'lesson_id'], 'string', 'max' => 12],
+            [['chapter_id', 'lesson_id'], 'string', 'max' => 12],
             [['name', 'slogan', 'cover', 'audio'], 'string', 'max' => 1000],
             [['teller'], 'string', 'max' => 50],
             [['contents'], 'string', 'max' => 10000],
