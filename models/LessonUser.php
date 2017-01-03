@@ -23,6 +23,14 @@ class LessonUser extends \yii\db\ActiveRecord
     const STATUS_CLOSED = 2;
     const STATUS_FINISH = 3;
 
+    const TYPE_PAY = 1;
+    const TYPE_FREE = 2;
+
+    public static $type = [
+        self::TYPE_PAY => '付费',
+        self::TYPE_FREE => '免费',
+    ];
+
     /**
      * @inheritdoc
      */

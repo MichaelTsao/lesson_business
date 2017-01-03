@@ -7,6 +7,7 @@ use Yii;
 use yii\behaviors\AttributeBehavior;
 use yii\db\ActiveRecord;
 use yii\behaviors\AttributeTypecastBehavior;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "lesson".
@@ -28,6 +29,8 @@ use yii\behaviors\AttributeTypecastBehavior;
  * @property string $ctime
  * @property string $coverUrl
  * @property string $posterUrl
+ * @property string $teachers  授课老师ID 数组
+ * @property string $tags
  * @property \dakashuo\lesson\Teacher[] $teacher 授课老师
  * @property string $lastUpdateTime 最新章节更新时间
  * @property bool $isSubscribed
@@ -55,6 +58,9 @@ class Lesson extends \yii\db\ActiveRecord
         self::PERIOD_QUARTER => '季',
         self::PERIOD_YEAR => '年',
     ];
+
+    protected $_teachers = null;
+    protected $_tags = null;
 
     /**
      * @inheritdoc
@@ -167,6 +173,54 @@ class Lesson extends \yii\db\ActiveRecord
     public function getSubscribeCount()
     {
         return 0 + $this->virtual_sub;
+    }
+
+    public function getTeachers()
+    {
+        if ($this->_teachers === null) {
+            $this->_teachers = ArrayHelper::getColumn($this->teacher,'teacher_id');
+        }
+        return json_encode($this->_teachers);
+    }
+
+    public function setTeachers($value)
+    {
+        $this->_teachers = $value;
+        LessonTeacher::deleteAll(['lesson_id' => $this->lesson_id]);
+        foreach (json_decode($value, true) as $index => $item) {
+            $teacher = new LessonTeacher();
+            $teacher->lesson_id = $this->lesson_id;
+            $teacher->teacher_id = $item;
+            $teacher->sort = $index;
+            $teacher->save();
+        }
+    }
+
+    public function getTags()
+    {
+        if ($this->_tags === null) {
+            $this->_tags = LessonTag::find()
+                ->select('tag')
+                ->where(['lesson_id' => $this->lesson_id])
+                ->orderBy(['sort' => SORT_ASC])
+                ->asArray()
+                ->column();
+        }
+        return json_encode($this->_tags);
+    }
+
+    public function setTags($value)
+    {
+        $this->_tags = $value;
+        LessonTag::deleteAll(['lesson_id' => $this->lesson_id]);
+
+        foreach (json_decode($value, true) as $index => $item) {
+            $tag = new LessonTag();
+            $tag->lesson_id = $this->lesson_id;
+            $tag->tag = $item;
+            $tag->sort = $index + 1;
+            $tag->save();
+        }
     }
 
     public function fields()

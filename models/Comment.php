@@ -16,6 +16,23 @@ use Yii;
  */
 class Comment extends \yii\db\ActiveRecord
 {
+    const STATUS_AUDIT = 1;
+    const STATUS_PASS = 2;
+    const STATUS_REFUSE = 3;
+
+    const NO_SHIELD = 1;
+    const IS_SHIELD = 2;
+
+    public static $statuses = [
+        self::STATUS_AUDIT => '未审核',
+        self::STATUS_PASS => '通过',
+        self::STATUS_REFUSE => '拒绝',
+    ];
+
+    public static $shield = [
+        self::NO_SHIELD =>'正常',
+        self::IS_SHIELD =>'已屏蔽',
+    ];
     /**
      * @inheritdoc
      */
