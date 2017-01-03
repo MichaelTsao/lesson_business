@@ -61,6 +61,7 @@ class Comment extends \yii\db\ActiveRecord
             [['comment_id', 'chapter_id', 'user_id'], 'string', 'max' => 12],
             [['content'], 'string', 'max' => 1000],
             ['chapter_id', 'exist', 'targetAttribute' => 'chapter_id', 'targetClass' => '\dakashuo\lesson\Chapter'],
+            ['user_id', 'default', 'value' => isset(Yii::$app->user) && !Yii::$app->user->isGuest ? Yii::$app->user->id : null],
         ];
     }
 
