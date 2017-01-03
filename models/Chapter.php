@@ -80,7 +80,7 @@ class Chapter extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'chpater_id' => '章节ID',
+            'chapter_id' => '章节ID',
             'lesson_id' => '课程',
             'name' => '标题',
             'slogan' => '标语',
