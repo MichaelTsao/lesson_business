@@ -12,6 +12,7 @@ use yii\db\ActiveRecord;
  * @property string $user_id
  * @property string $name
  * @property string $icon
+ * @property string $iconUrl
  * @property string $weixin_id
  * @property integer $status
  * @property string $ctime 创建时间
@@ -93,6 +94,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             ->viaTable('lesson_user', ['user_id' => 'user_id'], function($query){
                 $query->andWhere(['status' => LessonUser::STATUS_NORMAL]);
             });
+    }
+
+    public function getIconUrl()
+    {
+        return Logic::getImageHost() . $this->icon;
     }
 
     /*

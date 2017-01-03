@@ -3,16 +3,22 @@
 namespace dakashuo\lesson;
 
 use Yii;
+use yii\behaviors\AttributeBehavior;
+use yii\db\ActiveRecord;
+use mycompany\common\Logic;
 
 /**
  * This is the model class for table "comment".
  *
  * @property string $comment_id
- * @property string $lesson_id
+ * @property string $chapter_id
  * @property string $user_id
  * @property string $ctime
  * @property string $content
  * @property integer $status
+ * @property integer $is_shield
+ * @property User $user
+ * @property integer $like
  */
 class Comment extends \yii\db\ActiveRecord
 {
@@ -30,9 +36,10 @@ class Comment extends \yii\db\ActiveRecord
     ];
 
     public static $shield = [
-        self::NO_SHIELD =>'正常',
-        self::IS_SHIELD =>'已屏蔽',
+        self::NO_SHIELD => '正常',
+        self::IS_SHIELD => '已屏蔽',
     ];
+
     /**
      * @inheritdoc
      */
@@ -47,10 +54,10 @@ class Comment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['comment_id'], 'required'],
+            [['chapter_id', 'user_id', 'content'], 'required'],
             [['ctime'], 'safe'],
-            [['status'], 'integer'],
-            [['comment_id', 'lesson_id', 'user_id'], 'string', 'max' => 12],
+            [['status', 'is_shield'], 'integer'],
+            [['comment_id', 'chapter_id', 'user_id'], 'string', 'max' => 12],
             [['content'], 'string', 'max' => 1000],
         ];
     }
@@ -62,11 +69,50 @@ class Comment extends \yii\db\ActiveRecord
     {
         return [
             'comment_id' => '留言ID',
-            'lesson_id' => '课程',
+            'chapter_id' => '章节',
             'user_id' => '用户',
             'ctime' => '创建时间',
             'content' => '提问内容',
             'status' => '状态',
+        ];
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => AttributeBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => 'comment_id',
+                ],
+                'value' => Logic::makeID(),
+            ],
+        ];
+    }
+
+    public function getUser()
+    {
+        return $this->hasOne(User::className(), ['user_id' => 'user_id']);
+    }
+
+    public function getLike()
+    {
+        return Like::find()->where(['comment_id' => $this->comment_id])->count();
+    }
+
+    public function fields()
+    {
+        return [
+            'comment_id',
+            'name' => function ($model) {
+                return $model->user->name;
+            },
+            'icon' => function ($model) {
+                return $model->user->iconUrl;
+            },
+            'like',
+            'content',
+            'ctime',
         ];
     }
 }
