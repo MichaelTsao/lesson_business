@@ -23,6 +23,8 @@ use yii\db\ActiveRecord;
  * @property integer $listenCount
  * @property integer $is_free
  * @property string $teller
+ * @property \dakashuo\lesson\Teacher[] $teacher 授课老师
+ * @property \dakashuo\lesson\Lesson $lesson 所属课程
  * @property string $contents
  * @property \dakashuo\lesson\Content[] $content
  * @property integer $status
@@ -141,10 +143,15 @@ class Chapter extends \yii\db\ActiveRecord
         return $this->hasOne(Lesson::className(), ['lesson_id' => 'lesson_id']);
     }
 
+    public function getTeacher(){
+        return $this->lesson->teacher;
+    }
+
     public function fields()
     {
         return [
             'chapter_id',
+            'teacher',
             'name',
             'slogan',
             'cover' => 'coverUrl',

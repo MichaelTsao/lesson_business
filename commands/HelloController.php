@@ -7,6 +7,7 @@
 
 namespace app\commands;
 
+use dakashuo\lesson\Chapter;
 use dakashuo\lesson\Lesson;
 use dakashuo\lesson\User;
 use mycompany\common\Logic;
@@ -30,7 +31,7 @@ class HelloController extends Controller
      */
     public function actionIndex()
     {
-        $lesson = Lesson::findOne('082p7wk4m05');
+        $lesson = Chapter::findOne(2);
         echo json_encode($lesson->toArray())."\n";
     }
 }
