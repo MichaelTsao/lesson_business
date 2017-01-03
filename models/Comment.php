@@ -60,6 +60,7 @@ class Comment extends \yii\db\ActiveRecord
             [['status', 'is_shield'], 'integer'],
             [['comment_id', 'chapter_id', 'user_id'], 'string', 'max' => 12],
             [['content'], 'string', 'max' => 1000],
+            ['chapter_id', 'exist', 'targetAttribute' => 'chapter_id', 'targetClass' => '\dakashuo\lesson\Chapter'],
         ];
     }
 
