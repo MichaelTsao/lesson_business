@@ -2,6 +2,7 @@
 
 namespace dakashuo\lesson;
 
+use mycompany\common\Logic;
 use Yii;
 
 /**
@@ -21,8 +22,8 @@ class Pay extends \yii\db\ActiveRecord
     const CHANNEL_WEIXIN = 1;
     const CHANNEL_OFFLINE = 2;
 
-    public static $pay_channel = [
-        self::CHANNEL_WEIXIN  => '微信',
+    public static $pay_channels = [
+        self::CHANNEL_WEIXIN => '微信',
         self::CHANNEL_OFFLINE => '线下',
     ];
 
@@ -40,6 +41,7 @@ class Pay extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            ['pay_id', 'default', 'value' => Logic::makeID()],
             [['pay_id'], 'required'],
             [['pay_channel'], 'integer'],
             [['price'], 'number'],
@@ -62,6 +64,27 @@ class Pay extends \yii\db\ActiveRecord
             'pay_channel' => '支付渠道',
             'price' => '价格',
             'ctime' => '创建时间',
+        ];
+    }
+
+    public function getLesson()
+    {
+        return $this->hasOne(Lesson::className(), ['lesson_id' => 'lesson_id']);
+    }
+
+    public function fields()
+    {
+        return [
+            'pay_id',
+            'price',
+            'lessonName' => function ($model) {
+                return $model->lesson->name;
+            },
+            'payChannel' => function ($model) {
+                return isset(Pay::$pay_channels[$model->pay_channel]) ? Pay::$pay_channels[$model->pay_channel] : '';
+            },
+            'transaction_number',
+            'ctime',
         ];
     }
 }
