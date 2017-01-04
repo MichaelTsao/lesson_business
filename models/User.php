@@ -108,6 +108,15 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         }
     }
 
+    public function fields()
+    {
+        return [
+            'user_id',
+            'name',
+            'icon' => 'iconUrl',
+        ];
+    }
+
     public static function loginByWeixin($openId)
     {
         if (!$user = static::findOne(['weixin_id' => $openId])) {
