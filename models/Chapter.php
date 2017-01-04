@@ -17,13 +17,13 @@ use yii\db\ActiveRecord;
  * @property string $cover
  * @property string $coverUrl
  * @property string $audio
+ * @property integer $audio_length
  * @property string $audioUrl
  * @property integer $listen
  * @property integer $virtual_listen
  * @property integer $listenCount
  * @property integer $is_free
  * @property string $teller
- * @property \dakashuo\lesson\Teacher[] $teacher 授课老师
  * @property \dakashuo\lesson\Lesson $lesson 所属课程
  * @property string $contents
  * @property \dakashuo\lesson\Content[] $content
@@ -65,7 +65,7 @@ class Chapter extends \yii\db\ActiveRecord
     {
         return [
             [['name'], 'required'],
-            [['listen', 'virtual_listen', 'is_free', 'status'], 'integer'],
+            [['listen', 'virtual_listen', 'is_free', 'status', 'audio_length'], 'integer'],
             [['ctime'], 'safe'],
             [['chapter_id', 'lesson_id'], 'string', 'max' => 12],
             [['name', 'slogan', 'cover', 'audio'], 'string', 'max' => 1000],
@@ -86,6 +86,7 @@ class Chapter extends \yii\db\ActiveRecord
             'slogan' => '标语',
             'cover' => '封面',
             'audio' => '音频',
+            'audio_length' => '音频长度',
             'listen' => '收听次数',
             'virtual_listen' => '虚拟收听',
             'is_free' => '是否免费',
@@ -143,19 +144,18 @@ class Chapter extends \yii\db\ActiveRecord
         return $this->hasOne(Lesson::className(), ['lesson_id' => 'lesson_id']);
     }
 
-    public function getTeacher(){
-        return $this->lesson->teacher;
-    }
-
     public function fields()
     {
         return [
             'chapter_id',
-            'teacher',
+            'teacher' => function($model){
+                return $model->lesson->teacher;
+            },
             'name',
             'slogan',
             'cover' => 'coverUrl',
             'audio' => 'audioUrl',
+            'audioLength' => 'audio_length',
             'listenCount',
             'isFree' => 'is_free',
             'teller',
