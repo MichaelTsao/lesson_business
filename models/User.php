@@ -115,7 +115,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
                 'appId' => Yii::$app->params['weixin_appid'],
                 'appSecret' => Yii::$app->params['weixin_secret'],
             ]);
-            if (!$info = $weixin->getInfoFromServer($openId)) {
+
+            if (!$info = $weixin->getInfoFromServer($openId) || !isset($info['nickname'])) {
                 return false;
             }
 
