@@ -3,8 +3,10 @@
 namespace dakashuo\lesson;
 
 use mycompany\common\Logic;
+use mycompany\common\WeiXin;
 use yii\behaviors\AttributeBehavior;
 use yii\db\ActiveRecord;
+use Yii;
 
 /**
  * This is the model class for table "user".
@@ -39,6 +41,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
+            ['user_id', 'default', 'value' => Logic::makeID()],
             [['user_id'], 'required'],
             [['status'], 'integer'],
             [['ctime'], 'safe'],
@@ -91,18 +94,54 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function getLesson()
     {
         return $this->hasMany(Lesson::className(), ['lesson_id' => 'lesson_id'])
-            ->viaTable('lesson_user', ['user_id' => 'user_id'], function($query){
+            ->viaTable('lesson_user', ['user_id' => 'user_id'], function ($query) {
                 $query->andWhere(['status' => LessonUser::STATUS_NORMAL]);
             });
     }
 
     public function getIconUrl()
     {
-        return Logic::getImageHost() . $this->icon;
+        if (substr($this->icon, 0, 4) == 'http') {
+            return $this->icon;
+        } else {
+            return Logic::getImageHost() . $this->icon;
+        }
+    }
+
+    public static function loginByWeixin($openId)
+    {
+        if (!$user = static::findOne(['weixin_id' => $openId])) {
+            $weixin = new WeiXin([
+                'appId' => Yii::$app->params['weixin_appid'],
+                'appSecret' => Yii::$app->params['weixin_secret'],
+            ]);
+            if (!$info = $weixin->getInfoFromServer($openId)) {
+                return false;
+            }
+
+            $user = new static();
+            $user->name = $info['nickname'];
+            $user->icon = $info['headimgurl'];
+            $user->weixin_id = $openId;
+            if (!$user->save()) {
+                return false;
+            }
+        }
+
+        return self::setToken($user->user_id);
+    }
+
+    public static function setToken($user_id)
+    {
+        $token = md5(time() . $user_id . rand(100, 999));
+
+        Yii::$app->redis->setex('user_token:' . $token, 86400 * 30, $user_id);
+
+        return $token;
     }
 
     /*
-     * functions below is import from Interface IdentityInterface
+     * --------- functions below is import from Interface IdentityInterface -----------
      */
 
     /**
@@ -110,8 +149,8 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public static function findIdentityByAccessToken($token, $type = null)
     {
-        if ('token' === $token) {
-            return User::find()->one();
+        if ($uid = Yii::$app->redis->get('user_token:' . $token)) {
+            return User::findOne($uid);
         }
 
         return null;
