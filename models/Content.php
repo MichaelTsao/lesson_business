@@ -3,8 +3,6 @@
 namespace dakashuo\lesson;
 
 use Yii;
-use yii\behaviors\AttributeBehavior;
-use yii\db\ActiveRecord;
 use mycompany\common\Logic;
 
 /**
@@ -43,25 +41,13 @@ class Content extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            ['content_id', 'default', 'value' => Logic::makeID()],
             [['type'], 'required'],
             [['type'], 'integer'],
             [['content'], 'string'],
             [['ctime'], 'safe'],
             [['content_id'], 'string', 'max' => 12],
             [['url'], 'string', 'max' => 1000],
-        ];
-    }
-
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => AttributeBehavior::className(),
-                'attributes' => [
-                    ActiveRecord::EVENT_BEFORE_INSERT => 'content_id',
-                ],
-                'value' => Logic::makeID(),
-            ],
         ];
     }
 
